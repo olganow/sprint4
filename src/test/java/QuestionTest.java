@@ -1,5 +1,6 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.hamcrest.MatcherAssert;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,13 +16,14 @@ import static org.hamcrest.CoreMatchers.containsString;
 public class QuestionTest {
 
     private String actualText;
+    private final String questionText;
     private final int questionIndex;
     private final String expectedText;
     private final String url = "https://qa-scooter.praktikum-services.ru/";
 
-    public QuestionTest(int questionIndex, String actualText, String expectedText) {
+    public QuestionTest(int questionIndex, String questionText, String expectedText) {
         this.questionIndex = questionIndex;
-        this.actualText = actualText;
+        this.questionText = questionText;
         this.expectedText = expectedText;
     }
 
@@ -40,6 +42,12 @@ public class QuestionTest {
         WebDriverManager.chromedriver().setup();
     }
 
+    @After
+    public void teardown() {
+        WebDriver driver = new ChromeDriver();
+        driver.quit();
+    }
+
     @Test
     public void questionTest() {
         WebDriver driver = new ChromeDriver();
@@ -53,6 +61,5 @@ public class QuestionTest {
         actualText = objMainPage.getTextQuestion(questionIndex);
         MatcherAssert.assertThat(actualText, containsString(expectedText));
 
-        driver.quit();
     }
 }

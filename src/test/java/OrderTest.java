@@ -12,6 +12,16 @@ import static constants.Constant.URL;
 import static org.junit.Assert.assertTrue;
 
 public class OrderTest {
+
+    /*   Уважаемый ревьюер, добрый день!
+    К сожалению, не смогла написать тест одновременно для двух браузеров Google Chrome
+    и Mozilla Firefoх. Я сделала два pom.xml файла (их можно найти в двух коммитах).
+    В первом коммите pom.xml зависимости работают Google Chrome, но не работают Mozilla Firefoх.
+    Во втором коммите pom.xml зависимости работают Mozilla Firefoх,но не работают Google Chrome.
+    Объединить зависимости в один файл для работы с двумя браузерами не получилось в консоли ошибки,
+    которые не могу починить.
+    */
+
     WebDriver driver;
     private final String firstName = "Аманда";
     private final String secondName = "Фирс";

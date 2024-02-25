@@ -6,10 +6,12 @@ import org.openqa.selenium.WebDriver;
 
 public class MainPage {
 
+    private final WebDriver driver;
     private final By cookieConfirmButton = By.id("rcc-confirm-button");
     private final By accordionHeadQuestionList = By.className("accordion__button");
     private final By questionText = By.className("accordion__panel");
-    private final WebDriver driver;
+    private final By topOrderButton = By.className("Button_Button__ra12g");
+    private final By downOrderButton = By.xpath(".//*[text() = 'Как это работает']/parent::div//*[text() = 'Заказать']");
 
     public MainPage(WebDriver driver) {
         this.driver = driver;
@@ -35,5 +37,17 @@ public class MainPage {
     public String getTextQuestion(int questionIndex) {
         return driver.findElements(questionText).get(questionIndex).getText();
     }
+
+
+    //Cделать заказ через верхнюю кнопку
+    public void clickOnTopOrderButton() {
+        driver.findElement(topOrderButton).click();
+    }
+
+    //Cделать заказ через нижнюю кнопку
+    public void clickOnDownOrderButton() {
+        driver.findElement(downOrderButton).click();
+    }
+
 }
 

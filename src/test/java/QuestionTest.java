@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import pageObject.MainPage;
 
 import static org.hamcrest.CoreMatchers.containsString;
@@ -14,7 +14,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 @RunWith(Parameterized.class)
 
 public class QuestionTest {
-
+    WebDriver driver;
     private String actualText;
     private final String questionText;
     private final int questionIndex;
@@ -39,18 +39,20 @@ public class QuestionTest {
 
     @Before
     public void startUp() {
-        WebDriverManager.chromedriver().setup();
+        WebDriverManager.firefoxdriver().setup();
+        driver = new FirefoxDriver();
+
     }
 
     @After
     public void teardown() {
-        WebDriver driver = new ChromeDriver();
+        WebDriver driver = new FirefoxDriver();
         driver.quit();
     }
 
     @Test
     public void questionTest() {
-        WebDriver driver = new ChromeDriver();
+        WebDriver driver = new FirefoxDriver();
         driver.get(url);
 
         MainPage objMainPage = new MainPage(driver);

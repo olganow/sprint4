@@ -29,11 +29,11 @@ public class OrderTest {
     private final String phone = "89110000000";
     private final String dayData = "28";
 
+
     @Before
     public void startUp() {
         WebDriverManager.firefoxdriver().setup();
         driver = new FirefoxDriver();
-
     }
 
     @After
@@ -67,7 +67,7 @@ public class OrderTest {
         objOrderSecondPage.clickOrderButton();
         objOrderSecondPage.confirmOrderButton();
 
-        assertTrue(objOrderSecondPage.checkFinalStatusOrder());
+        assertTrue(objOrderSecondPage.isFinalStatusOrderDisplayed());
     }
 
     @Test
@@ -95,6 +95,6 @@ public class OrderTest {
         objOrderSecondPage.clickOrderButton();
         objOrderSecondPage.confirmOrderButton();
 
-        assertTrue(objOrderSecondPage.checkFinalStatusOrder());
+        assertTrue(objOrderSecondPage.isFinalStatusOrderDisplayed());
     }
 }

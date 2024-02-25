@@ -9,7 +9,7 @@ public class OrderSecondPage {
     private final By periodField = By.className("Dropdown-placeholder");
     private final By orderButton = By.xpath(".//*[text() = 'Назад']/following-sibling::button");
     private final By confirmOrderButton = By.xpath(".//*[text() = 'Да']");
-    private final By finalStatusOrder = By.xpath(".//*[text() = 'Посмотреть статус']");
+    private final By finalStatusOrder = By.xpath(".//*[text() = 'Заказ оформлен']");
 
     public OrderSecondPage(WebDriver driver) {
         this.driver = driver;
@@ -33,8 +33,9 @@ public class OrderSecondPage {
         driver.findElement(confirmOrderButton).click();
     }
 
-    public boolean checkFinalStatusOrder() {
-        return driver.findElements(finalStatusOrder).size() > 0;
+    public boolean isFinalStatusOrderDisplayed() {
+        return !driver.findElements(finalStatusOrder).isEmpty();
     }
+
 
 }

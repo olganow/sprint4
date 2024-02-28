@@ -20,7 +20,6 @@ public class QuestionTest {
     private final String questionText;
     private final int questionIndex;
     private final String expectedText;
-    private final String url = "https://qa-scooter.praktikum-services.ru/";
 
     public QuestionTest(int questionIndex, String questionText, String expectedText) {
         this.questionIndex = questionIndex;
@@ -46,7 +45,6 @@ public class QuestionTest {
     public void startUp() {
         driver = new ChromeDriver();
         objMainPage = new MainPage(driver);
-        driver.get(url);
         driver.get(URL);
         objMainPage.closeCookieBar();
 

@@ -1,9 +1,8 @@
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import pageObject.MainPage;
 import pageObject.OrderFirstPage;
 import pageObject.OrderSecondPage;
@@ -13,16 +12,10 @@ import static org.junit.Assert.assertTrue;
 
 public class OrderTest {
 
-    /*   Уважаемый ревьюер, добрый день!
-    К сожалению, не смогла написать тест одновременно для двух браузеров Google Chrome
-    и Mozilla Firefoх. Я сделала два pom.xml файла (их можно найти в двух коммитах).
-    В первом коммите pom.xml зависимости работают Google Chrome, но не работают Mozilla Firefoх.
-    Во втором коммите pom.xml зависимости работают Mozilla Firefoх,но не работают Google Chrome.
-    Объединить зависимости в один файл для работы с двумя браузерами не получилось в консоли ошибки,
-    которые не могу починить.
-    */
-
-    WebDriver driver;
+    private WebDriver driver;
+    private MainPage objMainPage;
+    private OrderFirstPage objOrderFirstPage;
+    private OrderSecondPage objOrderSecondPage;
     private final String firstName = "Аманда";
     private final String secondName = "Фирс";
     private final String address = "Улица Вязов";
@@ -31,27 +24,23 @@ public class OrderTest {
 
 
     @Before
-    public void startUp() {
-        WebDriverManager.firefoxdriver().setup();
-        driver = new FirefoxDriver();
+    public void setUp() {
+        driver = new ChromeDriver();
+        objMainPage = new MainPage(driver);
+        objOrderFirstPage = new OrderFirstPage(driver);
+        objOrderSecondPage = new OrderSecondPage(driver);
+        driver.get(URL);
+        objMainPage.closeCookieBar();
     }
 
     @After
     public void teardown() {
-        WebDriver driver = new FirefoxDriver();
+        driver = new ChromeDriver();
         driver.quit();
     }
 
-    @Test
-    public void OrderWithTopButtonTest() {
-        WebDriver driver = new FirefoxDriver();
-        driver.get(URL);
 
-        MainPage objMainPage = new MainPage(driver);
-        objMainPage.closeCookieBar();
-        objMainPage.clickOnTopOrderButton();
-
-        OrderFirstPage objOrderFirstPage = new OrderFirstPage(driver);
+    private void fillOrderDetails() {
         objOrderFirstPage.setFirstName(firstName);
         objOrderFirstPage.setSecondName(secondName);
         objOrderFirstPage.setAddress(address);
@@ -59,42 +48,23 @@ public class OrderTest {
         objOrderFirstPage.setNumber(phone);
         objOrderFirstPage.clickNextButton();
 
-
-        OrderSecondPage objOrderSecondPage = new OrderSecondPage(driver);
-
         objOrderSecondPage.setData(dayData);
         objOrderSecondPage.setPeriod("двое суток");
         objOrderSecondPage.clickOrderButton();
         objOrderSecondPage.confirmOrderButton();
+    }
 
+    @Test
+    public void orderWithTopButtonTest() {
+        objMainPage.clickOnTopOrderButton();
+        fillOrderDetails();
         assertTrue(objOrderSecondPage.isFinalStatusOrderDisplayed());
     }
 
     @Test
-    public void OrderWithDownButtonTest() {
-        WebDriver driver = new FirefoxDriver();
-        driver.get(URL);
-
-        MainPage objMainPage = new MainPage(driver);
-        objMainPage.closeCookieBar();
+    public void orderWithDownButtonTest() {
         objMainPage.clickOnDownOrderButton();
-
-        OrderFirstPage objOrderFirstPage = new OrderFirstPage(driver);
-        objOrderFirstPage.setFirstName(firstName);
-        objOrderFirstPage.setSecondName(secondName);
-        objOrderFirstPage.setAddress(address);
-        objOrderFirstPage.selectStation("Лубянка");
-        objOrderFirstPage.setNumber(phone);
-        objOrderFirstPage.clickNextButton();
-
-
-        OrderSecondPage objOrderSecondPage = new OrderSecondPage(driver);
-
-        objOrderSecondPage.setData(dayData);
-        objOrderSecondPage.setPeriod("двое суток");
-        objOrderSecondPage.clickOrderButton();
-        objOrderSecondPage.confirmOrderButton();
-
+        fillOrderDetails();
         assertTrue(objOrderSecondPage.isFinalStatusOrderDisplayed());
     }
 }
